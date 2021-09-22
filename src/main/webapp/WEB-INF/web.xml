@@ -27,13 +27,13 @@
 <!--        <listener-class>org.h2.server.web.DbStarter</listener-class>-->
 <!--    </listener>-->
     <servlet>
-        <servlet-name>helloServlet</servlet-name>
-        <servlet-class>com.example.helloworldenterprise.HelloServlet</servlet-class>
+        <servlet-name>userInfo</servlet-name>
+        <servlet-class>com.example.helloworldenterprise.UserInfo</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>helloServlet</servlet-name>
-        <url-pattern>/hello-servlet</url-pattern>
+        <servlet-name>userInfo</servlet-name>
+        <url-pattern>/user-info</url-pattern>
     </servlet-mapping>
 
 

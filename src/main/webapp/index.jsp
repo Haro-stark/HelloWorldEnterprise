@@ -7,6 +7,7 @@
 <body>
 
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="user-info">Click me to see user data</a>
+
 </body>
 </html>

@@ -50,6 +50,12 @@
             <artifactId>ojdbc10</artifactId>
             <version>19.3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>

@@ -2,11 +2,15 @@ package com.example.helloworldenterprise;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet(name = "userInfo", value = "/user-info")
+public class UserInfo extends HttpServlet {
     private String message;
 
     {
@@ -34,31 +38,32 @@ public class HelloServlet extends HttpServlet {
         message = "Hello World!";
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-
-        // Hello
-        PrintWriter out = response.getWriter();
+        List<User> userList = new ArrayList<User>();
 
 
         try {
-            out.println("<html><body>");
             System.out.println("calling.........");
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select * from users");
 
-            out.println("<table border=1 width=50% height=50%>");
-            out.println("<tr><th>EmpId</th><th>EmpName</th><th>Salary</th><tr>");
             while (rs.next())
             {
-                String id = rs.getString("userID");
-                String name = rs.getString("userName");
-                int salary = rs.getInt("sal");
-                out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + salary + "</td></tr>");
+                User user = new User();
+                user.setUserId(rs.getString("userID"));
+                user.setUserName(rs.getString("userName"));
+                user.setSalary(rs.getInt("sal"));
+                userList.add(user);
             }
-            out.println("</table>");
-            out.println("</html></body>");
+
+
+            for (User u: userList) {
+                System.out.println("id: "+u.getUserId()+"\nname: "+u.getUserName());
+
+            }
+
             System.out.println("query executed successfully...");
             DatabaseConnection.endConnection(connection);
         }
@@ -66,9 +71,11 @@ public class HelloServlet extends HttpServlet {
             System.out.println("SQLException caught: " +e.getMessage());
         }
 
+        request.setAttribute("userList", userList);
+        RequestDispatcher rd = request.getRequestDispatcher("user-display.jsp");
+        rd.forward(request, response);
+
         System.out.println("congratss....");
-
-
 
         response.setContentType("text/html");
 
